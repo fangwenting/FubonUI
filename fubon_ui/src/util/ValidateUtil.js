@@ -47,11 +47,11 @@ const ValidateUtil = {
     if ((inputID.substr(0, 1).charCodeAt(0) < 64) || (inputID.substr(0, 1).charCodeAt(0) > 91)) {
      return false
     } else {
-           // 驗證性別碼
+      // 驗證性別碼
       if (inputID.substr(1, 1) != '1' && inputID.substr(1, 1) != '2') {
         return false
       } else {
-               // 驗證剩餘字串是否為數字
+        // 驗證剩餘字串是否為數字
         for (let i = 2; i < inputID.length; i++) {
           if (inputID.substr(i - 1, 1).charCodeAt(0) < 47 || (inputID.substr(i - 1, 1)).charCodeAt(0) > 58) {
             return false

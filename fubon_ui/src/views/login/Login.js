@@ -60,7 +60,9 @@ export default {
           return;
         }
         if(!ValidateUtil.isEmpty(ValidateUtil.validatePwd(this.pwd)) && ValidateUtil.validatePwd(this.pwd).length > 1){
-          this.showMessage(ValidateUtil.validatePwd(this.pwd));
+          let errorMsg = ValidateUtil.validatePwd(this.pwd);
+          // errorMsg.unshift('至少需要符合含有以下四種字元中之三種條件：')
+          this.showMessage(errorMsg);
           return;
         }
         this.loginSuccess = true;

@@ -13,7 +13,7 @@
                   <b-tab class="tab-style" title="待辦-全部" active @click="setInit()"></b-tab>
                   <b-tab title="待辦-已處理" @click="isProcess()"></b-tab>
                   <b-tab title="待辦-未處理" @click="notProcess()"></b-tab>
-                  <b-tab title="通知單-全部" @click="noticeALL()"></b-tab>
+                  <b-tab title="通知單-全部" @click="setInit()"></b-tab>
                 </b-tabs>
                 <div class="font-18px font-weight-bold text-right pt-2">共{{items.length}}筆</div>
               </div>
@@ -33,7 +33,7 @@
               outlined >
 
               <template #cell(processingStatus)="data">
-                  <b-form-checkbox class="" v-model="data.item.processingStatus" size="lg" switch></b-form-checkbox>
+                  <b-form-checkbox class="" v-model="data.item.processingStatus" size="lg" switch @change="changeProcessingStatus(data.item)"></b-form-checkbox>
               </template>
 
               <template #cell(button)>
