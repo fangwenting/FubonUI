@@ -50,8 +50,9 @@ export default {
           this.showMessage(['請輸入使用者Id']);
           return;
         }
-        if(!ValidateUtil.validateRocId(this.userId)){
-          this.showMessage(['使用者Id格式不符，請重新輸入']);
+        if(!ValidateUtil.isEmpty(ValidateUtil.validateRocId(this.userId))){
+          let errorMsg = ValidateUtil.validateRocId(this.userId);
+          this.showMessage([errorMsg]);
           return;
         }
         // 驗證密碼

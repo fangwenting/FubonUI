@@ -32,56 +32,49 @@ const ValidateUtil = {
   驗證身分證
   */
   validateRocId(rocId){
-    let inputID = rocId.toString().toUpperCase().trim()
-    // 第二碼後不可有英文字
-    const check = /^[0-9]+$/
-    if (!check.test(inputID.substr(1, inputID.length))){
-      return false
-    }
-    // 證號不可大於10碼
-    if (inputID.length > 10 || inputID.length < 10){
-      return false
+    rocId = rocId.trim();
+
+    if (rocId.length != 10) {
+        return "使用者ID格式錯誤：長度不正確";
     }
 
-   // 第一碼是英文
-    if ((inputID.substr(0, 1).charCodeAt(0) < 64) || (inputID.substr(0, 1).charCodeAt(0) > 91)) {
-     return false
-    } else {
-      // 驗證性別碼
-      if (inputID.substr(1, 1) != '1' && inputID.substr(1, 1) != '2') {
-        return false
-      } else {
-        // 驗證剩餘字串是否為數字
-        for (let i = 2; i < inputID.length; i++) {
-          if (inputID.substr(i - 1, 1).charCodeAt(0) < 47 || (inputID.substr(i - 1, 1)).charCodeAt(0) > 58) {
-            return false
-          }
+
+    let countyCode = rocId.charCodeAt(0);
+    if (countyCode < 65 | countyCode > 90) {
+        return "使用者ID格式錯誤：字首英文代號不正確";
+    }
+
+    let genderCode = rocId.charCodeAt(1);
+    if (genderCode != 49 && genderCode != 50) {
+        return "使用者ID格式錯誤：性別代碼不正確";
+    }
+
+    let serialCode = rocId.slice(2)
+    for (let i in serialCode) {
+        let c = serialCode.charCodeAt(i);
+        if (c < 48 | c > 57) {
+            return "使用者ID格式錯誤：數字區出現非數字字元";
         }
-      }
     }
 
-    // 將英文代碼轉成數字
-    const ID_ABC_Data = 'A10B11C12D13E14F15G16H17I34J18K19L20M21N22O35P23Q24R25S26T27U28V29W32X30Y31Z33'
-    inputID = (ID_ABC_Data.substr(ID_ABC_Data.indexOf(inputID.substr(0, 1)) + 1, 2)) + (inputID.substr(1))
+    let conver = "ABCDEFGHJKLMNPQRSTUVXYWZIO"
+    let weights = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1]
 
-    let getNo = 1
-    let sum = parseInt(inputID.substr(0, 1))
+    rocId = String(conver.indexOf(rocId[0]) + 10) + rocId.slice(1);
 
-    // 取得檢查碼
-    for (let iyI = 9; iyI > 0; iyI--) {
-      sum = sum + (parseInt(inputID.substr(getNo, 1)) * (iyI))
-      getNo = getNo + 1
+    let checkSum = 0
+    for (let i = 0; i < rocId.length; i++) {
+      let c = parseInt(rocId[i])
+      let w = weights[i]
+      checkSum += c * w
     }
 
-    const mod = (10 - (sum % 10)) == 10 ? 0 : (10 - (sum % 10))
+    let verification = checkSum % 10 == 0
 
-    // 驗證檢查碼是否合格
-    // 檢查碼等於身分證字號最後一碼即合格
-    if (inputID.substr(inputID.length - 1, 1) == mod) {
-      return true
-    } else {
-      return false
+    if (!verification) {
+        return "使用者ID格式錯誤：檢核碼不正確";
     }
+    return null;
   },
   /*
   驗證密碼格式
