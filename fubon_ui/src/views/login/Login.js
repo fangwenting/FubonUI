@@ -47,22 +47,25 @@ export default {
       login(){
         // 驗證使用者代號
         if(ValidateUtil.isEmpty(this.userId)){
-          this.showMessage(['請輸入使用者Id']);
+          this.showMessage('請輸入使用者Id');
           return;
         }
         if(!ValidateUtil.isEmpty(ValidateUtil.validateRocId(this.userId))){
           let errorMsg = ValidateUtil.validateRocId(this.userId);
-          this.showMessage([errorMsg]);
+          this.showMessage(errorMsg);
           return;
         }
         // 驗證密碼
         if(ValidateUtil.isEmpty(this.pwd)){
-          this.showMessage(['請輸入密碼']);
+          this.showMessage('請輸入密碼');
           return;
         }
-        if(!ValidateUtil.isEmpty(ValidateUtil.validatePwd(this.pwd)) && ValidateUtil.validatePwd(this.pwd).length > 1){
-          let errorMsg = ValidateUtil.validatePwd(this.pwd);
-          // errorMsg.unshift('至少需要符合含有以下四種字元中之三種條件：')
+        if(ValidateUtil.validatePwd(this.pwd) > 1){
+          let errorMsg = '至少需要符合含有以下四種字元中之三種條件：<br>' + 
+          '<ol><li>英文大寫字元</li>' + 
+          '<li>英文小寫字元</li>' + 
+          '<li>數字字元</li>' + 
+          '<li>符號字元(例：~`!@#$%^&*()_+{}|:"<>?-=[];,./)</li>'
           this.showMessage(errorMsg);
           return;
         }

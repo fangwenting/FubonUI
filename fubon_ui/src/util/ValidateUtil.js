@@ -80,25 +80,25 @@ const ValidateUtil = {
   驗證密碼格式
   */
   validatePwd(str){
-    let errorMsg = [];
+    let count = 0;
     var lowercase = /^(?=.*[a-z])/;     // 英文小寫
     var uppercase = /^(?=.*[A-Z])/;     // 英文大小
     var number = /^(?=.*[0-9])/;        // 數字
     var special =  /[~|`|!|@|#|$|%|^|&|*|(|)|_|+|{|}|||:|"|<|>|?|\-|=|[|]|;|\\|'|,|\.|\/|]+/;  // 特殊字元
     
     if(!lowercase.test(str)){
-      errorMsg.push('至少一個小寫英文字母');
+      count ++ ;
     }
     if(!uppercase.test(str)){
-      errorMsg.push('至少一個大寫英文字母');
+      count ++ ;
     }
     if(!number.test(str)){
-      errorMsg.push('至少一個數字');
+      count ++ ;
     }
     if(!special.test(str)){
-      errorMsg.push('至少一個特殊符號(例：~`!@#$%^&*()_+{}|:"<>?-=[];,./)');
+      count ++ ;
     }
-    return errorMsg;
+    return count;
   },
 }
 export default ValidateUtil;

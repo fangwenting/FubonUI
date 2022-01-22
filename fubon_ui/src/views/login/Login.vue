@@ -29,15 +29,13 @@
     </div>
     
   <!---------------------------------- 提示訊息 ---------------------------------->
-    <b-toast id="my-toast" variant="danger" solid>
+    <b-toast id="my-toast" variant="danger" solid auto-hide-delay="6000">
       <template #toast-title>
         <div class="d-flex flex-grow-1 align-items-baseline">
           <strong class="mr-auto">提醒</strong>
         </div>
       </template>
-      <div v-for="(item,index) in errorMsg" :key="index">
-        {{item}}
-      </div>
+      <div v-html="errorMsg"></div>
     </b-toast>
 
     <!---------------------------------- 頁底 ---------------------------------->
